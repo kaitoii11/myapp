@@ -1,0 +1,2 @@
+# myapp
+Sample Golang app
