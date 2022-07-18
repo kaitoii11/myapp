@@ -10,10 +10,7 @@ import (
 
 func main() {
 	// Setup Main Server
-	echoMainServer := echo.New()
-	echoMainServer.HideBanner = true
-	echoMainServer.Use(middleware.Logger())
-	echoMainServer.GET("/", hello)
+	helloRouter := NewHelloRouter()
 
 	// Create Prometheus server and Middleware
 	echoPrometheus := echo.New()
@@ -21,13 +18,22 @@ func main() {
 	prom := prometheus.NewPrometheus("echo", nil)
 
 	// Scrape metrics from Main Server
-	echoMainServer.Use(prom.HandlerFunc)
+	helloRouter.Use(prom.HandlerFunc)
 	// Setup metrics endpoint at another server
 	prom.SetMetricsPath(echoPrometheus)
 
 	go func() { echoPrometheus.Logger.Fatal(echoPrometheus.Start(":9360")) }()
 
-	echoMainServer.Logger.Fatal(echoMainServer.Start(":8080"))
+	helloRouter.Logger.Fatal(helloRouter.Start(":8080"))
+}
+
+func NewHelloRouter() *echo.Echo {
+	echoMainServer := echo.New()
+	echoMainServer.HideBanner = true
+	echoMainServer.Use(middleware.Logger())
+	echoMainServer.GET("/", hello)
+
+	return echoMainServer
 }
 
 func hello(c echo.Context) error {
