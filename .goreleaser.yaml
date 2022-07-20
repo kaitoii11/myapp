@@ -26,5 +26,5 @@ changelog:
       - '^test:'
 dockers:
   - image_templates:
-    - "kaitoii11/myapp:{{ .Tag }}"
-    - "kaitoii11/myapp:latest"
+    - "ghcr.io/kaitoii11/myapp/myapp:{{ .Tag }}"
+    - "ghcr.io/kaitoii11/myapp/myapp:latest"
