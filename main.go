@@ -37,5 +37,5 @@ func NewHelloRouter() *echo.Echo {
 }
 
 func hello(c echo.Context) error {
-	return c.String(http.StatusOK, "Goodbye, World!!!")
+	return c.String(http.StatusOK, "Hello, everyone!!!")
 }
