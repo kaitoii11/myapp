@@ -28,3 +28,11 @@ dockers:
   - image_templates:
     - "ghcr.io/kaitoii11/myapp:{{ .Tag }}"
     - "ghcr.io/kaitoii11/myapp:latest"
+docker_signs:
+  - cmd: cosign
+    env:
+    - COSIGN_EXPERIMENTAL=1
+    artifacts: images
+    args:
+    - 'sign'
+    - '${artifact}'
