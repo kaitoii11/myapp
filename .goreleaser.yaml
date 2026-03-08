@@ -1,3 +1,4 @@
+version: 2
 before:
   hooks:
     - go mod tidy
@@ -9,15 +10,15 @@ builds:
       - windows
       - darwin
 archives:
-  - replacements:
-      darwin: Darwin
-      linux: Linux
-      windows: Windows
-      amd64: x86_64
+  - name_template: >-
+      {{ .ProjectName }}_
+      {{- title .Os }}_
+      {{- if eq .Arch "amd64" }}x86_64
+      {{- else }}{{ .Arch }}{{ end }}
 checksum:
   name_template: 'checksums.txt'
 snapshot:
-  name_template: "{{ incpatch .Version }}-next"
+  version_template: "{{ incpatch .Version }}-next"
 changelog:
   sort: asc
   filters:
@@ -26,13 +27,13 @@ changelog:
       - '^test:'
 dockers:
   - image_templates:
-    - "ghcr.io/kaitoii11/myapp:{{ .Tag }}"
-    - "ghcr.io/kaitoii11/myapp:latest"
+      - "ghcr.io/kaitoii11/myapp:{{ .Tag }}"
+      - "ghcr.io/kaitoii11/myapp:latest"
 docker_signs:
   - cmd: cosign
     env:
-    - COSIGN_EXPERIMENTAL=1
+      - COSIGN_EXPERIMENTAL=1
     artifacts: images
     args:
-    - 'sign'
-    - '${artifact}'
+      - 'sign'
+      - '${artifact}'
