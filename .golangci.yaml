@@ -1,12 +1,14 @@
+version: "2"
 linters:
   enable:
     - asciicheck
     - errcheck
-    - gofmt
-    - gosimple
     - govet
     - revive
     - staticcheck
-    - typecheck
     - unused
   disable-all: true
+
+formatters:
+  enable:
+    - gofmt

@@ -1,3 +1,4 @@
+// Package main is the entry point for the myapp web application.
 package main
 
 import (
@@ -27,6 +28,7 @@ func main() {
 	helloRouter.Logger.Fatal(helloRouter.Start(":8080"))
 }
 
+// NewHelloRouter creates and configures a new Echo router with a hello endpoint.
 func NewHelloRouter() *echo.Echo {
 	echoMainServer := echo.New()
 	echoMainServer.HideBanner = true
